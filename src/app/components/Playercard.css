@@ -1,0 +1,28 @@
+.participant{
+    display: flex;
+}
+
+.participantBlueTeam{
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.participantRedTeam{
+
+}
+
+.participantImage{
+    display: inline-block;
+}
+
+.participantInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.participantSummonerName{
+
+}
+.participantChampionName{
+    
+}

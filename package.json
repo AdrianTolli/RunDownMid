@@ -1,0 +1,41 @@
+{
+  "name": "RunDownMid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run:dev": "concurrently \"start http://localhost:4000\" \"npm run run:webpackdev\" \"npm run build:server\" \"npm run run:nodemonserver\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:client": "webpack",
+    "build:server": "webpack --config webpack.server.config.js --watch",
+    "run:server": "node serverbuild/bundle.js",
+    "run:webpackdev": "webpack-dev-server",
+    "run:nodemonserver": "nodemon --watch ./serverbuild --exec npm run run:server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.0.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "concurrently": "^3.4.0",
+    "css-loader": "^0.28.4",
+    "express": "^4.15.3",
+    "ignore-loader": "^0.1.2",
+    "isomorphic-fetch": "^2.2.1",
+    "nodemon": "^1.11.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-hot-loader": "^3.0.0-beta.7",
+    "react-redux": "^5.0.5",
+    "react-router-dom": "^4.1.1",
+    "redux": "^3.6.0",
+    "request": "^2.81.0",
+    "style-loader": "^0.18.2",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
+  }
+}
