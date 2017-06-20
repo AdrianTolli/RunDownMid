@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import express from 'express';
-import { getSummoner, getLiveGame, getChampions, getSummonerRank } from './api';
+import { getSummoner, getFeaturedGame, getLiveGame, getChampions, getSummonerRank } from './api';
 import { renderToString } from "react-dom/server";
 import { createStore } from "redux";
 import lolreducer from "../app/redux/lolreducer";
@@ -21,7 +21,7 @@ app.get('/api/game/:region/:name', (req,res) => {
             if(game.hasOwnProperty('status')){
                 res.json(game);
                 return;
-            }
+            };
 
             let completed = 0;
             let toCompelete = game.participants.length;
@@ -37,9 +37,9 @@ app.get('/api/game/:region/:name', (req,res) => {
                     completed++;
                     if(completed==toCompelete){
                         res.json(game);
-                    }
-                })
-            }
+                    };
+                });
+            };
         });
     });
 });
@@ -50,11 +50,46 @@ app.get('/api/champions/:region', (req, res) => {
     });
 });
 
+app.get('/api/featuredgame/:region', (req,res) => {
+    getFeaturedGame(reg.params.region, (error, response, body) => {
+        let featuredGame = JSON.parse(body);
+        getSummoner(req.params.region, featuredGame.gameList.participants.summonerName, (error, response, body) => {
+            let summoner = JSON.parse(body);
+            getLiveGame(req.params.region, summoner.id, (error, reponse, body) => {
+                let game = JSON.parse(body);
+
+                if(game.hasOwnProperty('status')){
+                    res.json(game);
+                    return;
+                };
+
+                let completed = 0;
+                let toCompelete = game.participants.length;
+                for(let i = 0; i<game.participants.length; i++){
+
+                    getSummonerRank(req.params.region, game.participants[i].summonerId, (error, response, body) => {
+                        let participantRank = JSON.parse(body);
+                        if(participantRank.hasOwnProperty('status')){
+                            game.participants[i].rank = [];
+                        } else {
+                            game.participants[i].rank = participantRank;
+                        }
+                        completed++;
+                        if(completed==toCompelete){
+                            res.json(game);
+                        };
+                    });
+                };
+            });
+        });
+    });
+});
+
 app.use(handleRender);
 
 function handleRender(req,res){
-    const store = createStore(lolreducer)
-    const context = {}
+    const store = createStore(lolreducer);
+    const context = {};
     const html = renderToString(
         <Provider store={store}>
             <StaticRouter location={req.url} context={context}>
@@ -71,9 +106,9 @@ function handleRender(req,res){
         res.end()
     } else {
         res.send(renderFullPage(html, preloadedState))
-    }
+    };
 
-}
+};
 function renderFullPage(html, preloadedState) {
   return `
     <!doctype html>
@@ -92,7 +127,7 @@ function renderFullPage(html, preloadedState) {
       </body>
     </html>
     `
-}
+};
 
 app.listen(3000, function (){
     console.log('Server is listening on 3000!')
