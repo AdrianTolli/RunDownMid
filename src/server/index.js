@@ -47,41 +47,13 @@ app.get('/api/game/:region/:name', (req,res) => {
 app.get('/api/champions/:region', (req, res) => {
     getChampions(req.params.region, (error, response, body) => {
         res.json(JSON.parse(body));
+        
     });
 });
 
 app.get('/api/featuredgame/:region', (req,res) => {
-    getFeaturedGame(reg.params.region, (error, response, body) => {
-        let featuredGame = JSON.parse(body);
-        getSummoner(req.params.region, featuredGame.gameList.participants.summonerName, (error, response, body) => {
-            let summoner = JSON.parse(body);
-            getLiveGame(req.params.region, summoner.id, (error, reponse, body) => {
-                let game = JSON.parse(body);
-
-                if(game.hasOwnProperty('status')){
-                    res.json(game);
-                    return;
-                };
-
-                let completed = 0;
-                let toCompelete = game.participants.length;
-                for(let i = 0; i<game.participants.length; i++){
-
-                    getSummonerRank(req.params.region, game.participants[i].summonerId, (error, response, body) => {
-                        let participantRank = JSON.parse(body);
-                        if(participantRank.hasOwnProperty('status')){
-                            game.participants[i].rank = [];
-                        } else {
-                            game.participants[i].rank = participantRank;
-                        }
-                        completed++;
-                        if(completed==toCompelete){
-                            res.json(game);
-                        };
-                    });
-                };
-            });
-        });
+    getFeaturedGame(req.params.region, (error, response, body) => {
+        res.json(JSON.parse(body));
     });
 });
 
