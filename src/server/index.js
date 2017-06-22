@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import express from 'express';
-import { getSummoner, getFeaturedGame, getLiveGame, getChampions, getSummonerRank } from './api';
+import { getSummoner, getFeaturedGame, getLiveGame, getChampions, getSummonerRank, getSummonerStats } from './api';
 import { renderToString } from "react-dom/server";
 import { createStore } from "redux";
 import lolreducer from "../app/redux/lolreducer";
@@ -44,10 +44,15 @@ app.get('/api/game/:region/:name', (req,res) => {
     });
 });
 
+app.get('/api/summonerStat/:region/:summonerId', (req, res) => {
+    getSummonerStats(req.params.region, req.params.summonerId, (error, response, body) => {
+        res.json(JSON.parse(body));
+    });
+});
+
 app.get('/api/champions/:region', (req, res) => {
     getChampions(req.params.region, (error, response, body) => {
         res.json(JSON.parse(body));
-        
     });
 });
 

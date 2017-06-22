@@ -75,9 +75,11 @@ class gamepage extends React.Component {
             </div>
             <div className="teamsContainer">
                 <div className="team team1">
+                    <h1 className="blueTeam">Blue team</h1>
                     { participants.slice(0,5) }
                 </div>
                 <div className="team team2">
+                    <h1 className="redTeam">Red team</h1>
                     { participants.slice(5) }
                 </div>
             </div>

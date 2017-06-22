@@ -13,3 +13,14 @@
 .teamsContainer{
     display: flex;
 }
+
+.blueTeam{
+    text-align: right;
+    color: darkblue;
+    text-shadow: 1px 1px lightseagreen;
+}
+
+.redTeam{
+    color: darkred;
+    text-shadow: 1px 1px orangered;
+}

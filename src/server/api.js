@@ -9,7 +9,7 @@ const urls = {
     champions: 'https://{region}.api.riotgames.com/lol/static-data/v3/champions?tags=image&dataById=true',
     summonerRank: 'https://{region}.api.riotgames.com/lol/league/v3/positions/by-summoner/{summonerId}',
     featuredGame: 'https://{region}.api.riotgames.com/lol/spectator/v3/featured-games',
-    summonerStats: 'https://{region}.api.riotgames.com/api/lol/{region}/v1.3/stats/by-summoner/{summonerId}/ranked?season=SEASON3'
+    summonerStats: 'https://{region}.api.riotgames.com/api/lol/{region}/v1.3/stats/by-summoner/{summonerId}/ranked?season=SEASON2017'
 }
 
 export const getSummoner = (region, summonerName, callback) => {
@@ -30,7 +30,7 @@ export const getSummonerRank = (region, summonerId, callback) => {
 
 export const getSummonerStats = (region, summonerId, callback) => {
     let url = urls.summonerStats;
-    url = url.replace('{region}', region);
+    url = url.replace(/{region}/g, region);
     url = url.replace('{summonerId}', summonerId);
 
     _riotApiGet(url, callback);

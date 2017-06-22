@@ -17,12 +17,23 @@
 
 .participantInfo{
     display: flex;
+    width: 40%;
     flex-direction: column;
     justify-content: space-between;
+    border: 1px solid black;
 }
 .participantSummonerName{
-
+    font-size: 24px;
+    color: lightgray;
+    text-shadow: 1px 1px black;
 }
+
+.participantRank{
+    color: lightgray;
+    text-shadow: 1px 1px black;
+}
+
 .participantChampionName{
-    
+    color: lightgray;
+    text-shadow: 1px 1px black;
 }

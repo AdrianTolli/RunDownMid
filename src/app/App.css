@@ -4,5 +4,5 @@ html, body {
     margin: 0;
     padding: 0;
     overflow: auto;
-    background: mediumaquamarine;
+    background: linear-gradient(to right, blue 40%, red 60%);
 }
