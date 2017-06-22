@@ -19,11 +19,12 @@ class FeaturedGameButton extends React.Component {
             .then((response) => {
                 return response.json();
             }).then((json) => {
-                let summoner = json.gameList[0].participants[0].summonerName;
+                let randomGameNumber = parseInt((Math.random() * json.gameList.length));
+                console.log(json.gameList.length);
+                console.log(randomGameNumber);
+                let summoner = json.gameList[randomGameNumber].participants[0].summonerName;
                 this.props.history.push('/Gamepage/' + summoner );
             });
-
-        this.props.history.push('/Gamepage/'  );
     };
 
     render() {
