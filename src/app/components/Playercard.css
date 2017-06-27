@@ -7,8 +7,8 @@
     text-align: right;
 }
 
-.participantRedTeam{
-
+.participantRedTeam .statComponent{
+    text-align: right;
 }
 
 .participantImage{
@@ -36,4 +36,9 @@
 .participantChampionName{
     color: lightgray;
     text-shadow: 1px 1px black;
+}
+
+.statComponent{
+    color: lightgray;
+    text-align: left;
 }

@@ -10,7 +10,7 @@ import { StaticRouter } from "react-router";
 
 var app = express();
 
-app.use(express.static('build'));
+//app.use(express.static('/build' , 'build'));
 
 app.get('/api/game/:region/:name', (req,res) => {
     getSummoner(req.params.region, req.params.name, (error, response, body) => {
@@ -24,9 +24,14 @@ app.get('/api/game/:region/:name', (req,res) => {
             };
 
             let completed = 0;
-            let toCompelete = game.participants.length;
-            for(let i = 0; i<game.participants.length; i++){
 
+            let toCompelete = 2;
+            for(let i = 0; i<game.participants.length; i++){
+                game.participants[i].stats = {champions:[]};
+                game.participants[i].rank = [];
+            };
+
+            for(let i = 0; i<2; i++){
                 getSummonerRank(req.params.region, game.participants[i].summonerId, (error, response, body) => {
                     let participantRank = JSON.parse(body);
                     if(participantRank.hasOwnProperty('status')){
@@ -36,22 +41,26 @@ app.get('/api/game/:region/:name', (req,res) => {
                     }
                     completed++;
                     if(completed==toCompelete){
-                        res.json(game);
+                        let statComplete = 0;
+                        for(let j = 0; j<game.participants.length; j++){
+                            getSummonerStats(req.params.region, game.participants[j].summonerId, (error, response, body) => {
+                                let participantStat = JSON.parse(body);
+                                if(participantStat.hasOwnProperty('status')){
+                                    game.participants[j].stats = {champions:[]};
+                                } else {
+                                    game.participants[j].stats = participantStat;
+                                }
+                                statComplete++;
+                                if(statComplete==toCompelete){
+                                    res.json(game);
+                                };
+                            });
+                        };
                     };
                 });
             };
 
-            let statComplete = 0;
-            for(let i = 0; i<game.participants.length; i++){
-                getSummonerStats(req.params.region, game.participants[i].summonerId, (error, response, body) => {
-                    let participantStat = JSON.parse(body);
-                    game.participants[i].stats[i] = participantStat;
-                    statComplete++;
-                    if(statComplete==toCompelete){
-                        res.json(game);
-                    };
-                });
-            };
+            
         });
     });
 });
@@ -112,7 +121,7 @@ function renderFullPage(html, preloadedState) {
           // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations
           window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
         </script>
-        <script src="/bundle.js"></script>
+        <script src="/build/bundle.js"></script>
       </body>
     </html>
     `

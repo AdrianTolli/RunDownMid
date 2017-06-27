@@ -4,5 +4,5 @@ html, body {
     margin: 0;
     padding: 0;
     overflow: auto;
-    background: linear-gradient(to right, blue 40%, red 60%);
+    background: linear-gradient(to right, #111f35 40%, #351117 60%);
 }

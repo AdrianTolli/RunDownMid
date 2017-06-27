@@ -30,9 +30,9 @@ export const getSummonerRank = (region, summonerId, callback) => {
 
 export const getSummonerStats = (region, summonerId, callback) => {
     let url = urls.summonerStats;
-    url = url.replace(/{region}/g, region);
+    url = url.replace(/{region}/g, "euw");
     url = url.replace('{summonerId}', summonerId);
-
+    console.log(url);
     _riotApiGet(url, callback);
 };
 
