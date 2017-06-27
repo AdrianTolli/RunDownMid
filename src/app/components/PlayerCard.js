@@ -12,6 +12,14 @@ export default class PlayerCard extends React.Component{
         if(soloRank.length > 0){
             rankComponent = <div className="participantRank">{soloRank[0].tier} {soloRank[0].rank} (lp {soloRank[0].leaguePoints})</div>
         }
+        for(let i=0; this.props.data.stats.champions.length; i++){
+            if(this.props.data.stats.champions[i].id==this.props.champion.id){
+                let fullStatList = this.props.data.stats.champion[i];
+                let totalWins = this.props.data.stats.champion[i].stats.totalSessionsWon;
+                let statComponent = <div className="statWins">{totalWins}</div>
+            };
+        };
+
         if(this.props.data.teamId === 100){
             return <div className="participant participantBlueTeam">
                 <div className="participantInfo">
@@ -19,6 +27,7 @@ export default class PlayerCard extends React.Component{
                         {this.props.data.summonerName}
                     </div>
                     {rankComponent}
+                    {statComponent}
                     <div className="participantChampionName">
                         {this.props.champion.name}
                     </div>

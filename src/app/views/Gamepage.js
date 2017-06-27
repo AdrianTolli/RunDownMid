@@ -29,14 +29,13 @@ class gamepage extends React.Component {
                 });
             });
             this.getLiveGame();
-    }
+    };
 
     getLiveGame(){
         let name = this.props.name;
         if(this.props.match.params.name){
             name = this.props.match.params.name;
-        }
-        console.log(name);
+        };
         fetch('/api/game/euw1/' + name)
             .then((response) => {
                 return response.json();
@@ -46,7 +45,7 @@ class gamepage extends React.Component {
                     game: json
                 });
             });
-    }
+    };
 
     render () {
         const game = this.state.game;

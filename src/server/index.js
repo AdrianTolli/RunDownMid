@@ -40,6 +40,18 @@ app.get('/api/game/:region/:name', (req,res) => {
                     };
                 });
             };
+
+            let statComplete = 0;
+            for(let i = 0; i<game.participants.length; i++){
+                getSummonerStats(req.params.region, game.participants[i].summonerId, (error, response, body) => {
+                    let participantStat = JSON.parse(body);
+                    game.participants[i].stats[i] = participantStat;
+                    statComplete++;
+                    if(statComplete==toCompelete){
+                        res.json(game);
+                    };
+                });
+            };
         });
     });
 });
